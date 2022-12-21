@@ -2,18 +2,28 @@
 <div class="box" id="heading">
   <h1><%= listType %></h1>
 </div>
-<div class="box">
-  <%for (let i = 0; i < newListItems.length; i++) {%>
-  <div id="item">
-    <input type="checkbox" />
-    <p><%= newListItems[i] %></p>
-    <%}%>
-  </div>
+<div name="itemsDiv" class="box box-item">
+  <%newListItems.forEach((item)=> {%>
+  <form action="/delete" method="post">
+    <div id="item">
+      <input
+        type="checkbox"
+        name="checkbox"
+        onchange="this.form.submit()"
+        value="<%-item.name-%>"
+      />
+      <p><%= item.name %></p>
+      <%})%>
+    </div>
+    <input type="hidden" name="listName" value="<%- listType -%>" />
+  </form>
 </div>
 
-<form class="box" action="/" method="post">
-  <input type="text" name="newItem" placeholder="what's next?" />
-  <button type="submit" name="button" value="<%-listType-%>">+</button>
-</form>
+<div name="whatNextDiv">
+  <form class="box" action="/" method="post">
+    <input type="text" name="newItem" placeholder="what's next?" />
+    <button type="submit" name="button" value="<%-listType-%>">+</button>
+  </form>
+</div>
 
 <%- include('footer'); -%>
